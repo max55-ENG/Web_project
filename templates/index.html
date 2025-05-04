@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Доступные поездки</h1>
+        <a href="{{ url_for('create_ride') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i> Новая поездка
+        </a>
+    </div>
+
+    <div class="row">
+        {% for ride in rides %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card ride-card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <span>{{ ride.departure }} → {{ ride.destination }}</span>
+                    <span class="badge bg-success">{{ ride.price }} ₽</span>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <i class="far fa-calendar-alt text-muted me-1"></i>
+                            <small>{{ ride.date }}</small>
+                        </div>
+                        <div>
+                            <i class="far fa-clock text-muted me-1"></i>
+                            <small>{{ ride.time }}</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-ride">
+                            <i class="fas fa-users me-1"></i>
+                            {{ ride.seats }} места
+                        </span>
+                        <button class="btn btn-sm btn-accent">
+                            <i class="fas fa-bookmark me-1"></i> Забронировать
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                Поездок пока нет. Станьте первым!
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

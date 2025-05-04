@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="form-title">Создать новую поездку</h1>
+
+    <form method="POST" class="ride-form">
+        <!-- Откуда -->
+        <div class="form-group">
+            <label for="departure">Откуда*</label>
+            <input type="text" id="departure" name="departure"
+                   placeholder="Город отправления" required
+                   minlength="2" maxlength="50">
+        </div>
+
+        <!-- Куда -->
+        <div class="form-group">
+            <label for="destination">Куда*</label>
+            <input type="text" id="destination" name="destination"
+                   placeholder="Город назначения" required
+                   minlength="2" maxlength="50">
+        </div>
+
+        <!-- Дата и время -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="date">Дата*</label>
+                <input type="date" id="date" name="date" required
+                       min="{{ now }}">
+            </div>
+
+            <div class="form-group">
+                <label for="time">Время*</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+        </div>
+
+        <!-- Места и цена -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="seats">Количество мест*</label>
+                <input type="number" id="seats" name="seats"
+                       min="1" max="8" value="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Цена (руб)*</label>
+                <input type="number" id="price" name="price"
+                       min="0" step="50" value="0" required>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Создать поездку</button>
+    </form>
+</div>
+{% endblock %}
