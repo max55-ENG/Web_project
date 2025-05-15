@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header text-center mb-5">
+            <h2 class="auth-title">Добро пожаловать!</h2>
+            <p class="auth-subtitle">Введите данные для входа</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4">
+                <label class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email"
+                           class="form-control form-control-lg"
+                           name="email"
+                           placeholder="example@mail.com"
+                           required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Пароль</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password"
+                           class="form-control form-control-lg"
+                           name="password"
+                           placeholder="••••••••"
+                           required>
+                </div>
+                <div class="text-end mt-2">
+                    <a href="{{ url_for('reset_password_request') }}" class="text-muted small">
+                        Забыли пароль?
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-grid mb-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>Войти
+                </button>
+            </div>
+
+            <div class="text-center pt-3 border-top">
+                <p class="text-muted mb-0">Ещё нет аккаунта?</p>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary mt-2">
+                    Зарегистрироваться
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

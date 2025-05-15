@@ -1,0 +1,46 @@
+.profile-card {
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -60px auto 20px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.bookings-card {
+    border-radius: 1rem;
+}
+
+.booking-card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.booking-card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.empty-state {
+    opacity: 0.7;
+}
+
+.btn-link.text-danger {
+    transition: color 0.3s ease;
+}
+
+.btn-link.text-danger:hover {
+    color: #dc3545 !important;
+}
+
+.card-hover {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header text-center mb-4">
+            <h2 class="auth-title">Создайте аккаунт</h2>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control") }}
+                {% if form.username.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.username.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+                {% if form.password.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.password.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control") }}
+                {% if form.confirm_password.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.confirm_password.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Зарегистрироваться
+            </button>
+        </form>
+
+        <div class="auth-footer text-center mt-3">
+            <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

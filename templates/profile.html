@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок профиля -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold text-primary">
+                <i class="fas fa-user-circle me-2"></i>Мой профиль
+            </h1>
+        </div>
+    </div>
+
+    <!-- Основная информация -->
+    <div class="row g-4">
+        <!-- Боковая панель -->
+        <div class="col-lg-4">
+            <div class="card profile-card shadow-lg">
+                <div class="card-body text-center">
+                    <div class="avatar-wrapper mb-4">
+                        <div class="avatar bg-primary">
+                            <i class="fas fa-user fa-3x text-white"></i>
+                        </div>
+                    </div>
+
+                    <h2 class="mb-3">{{ current_user.username }}</h2>
+                    <p class="text-muted mb-4">
+                        <i class="fas fa-envelope me-2"></i>{{ current_user.email }}
+                    </p>
+
+                    <div class="d-grid gap-2">
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-2"></i>Редактировать профиль
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Выйти
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Бронирования -->
+        <div class="col-lg-8">
+            <div class="card bookings-card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-calendar-alt me-2"></i>Активные бронирования
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    {% if current_user.booked_rides.count() > 0 %}
+                    <div class="row g-4">
+                        {% for ride in current_user.booked_rides %}
+                        <div class="col-12">
+                            <div class="booking-card card-hover">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="route-info">
+                                            <h4 class="mb-1">
+                                                {{ ride.departure }}
+                                                <i class="fas fa-arrow-right mx-2 text-primary"></i>
+                                                {{ ride.destination }}
+                                            </h4>
+                                            <div class="text-muted">
+                                                <i class="fas fa-calendar-day me-2"></i>
+                                                {{ ride.date }} в {{ ride.time }}
+                                            </div>
+                                        </div>
+
+                                        <div class="price-info text-end">
+                                            <div class="h4 text-primary mb-0">
+                                                {{ ride.price }} ₽
+                                            </div>
+                                            <small class="text-muted">за место</small>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-3">
+
+                                    <div class="booking-footer">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="badge bg-success">
+                                                <i class="fas fa-check me-2"></i>Подтверждено
+                                            </div>
+                                            <form action="{{ url_for('cancel_booking', ride_id=ride.id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirmCancel()" class="d-inline">
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                <button type="submit" class="btn btn-link text-danger p-0">
+                                                    <i class="fas fa-trash-alt me-2"></i>Отменить
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="empty-state text-center py-5">
+                        <div class="empty-icon mb-4">
+                            <i class="fas fa-car-side fa-4x text-muted"></i>
+                        </div>
+                        <h4 class="text-muted mb-3">Нет активных бронирований</h4>
+                        <a href="{{ url_for('home') }}" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Найти поездки
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    // Анимация при наведении на карточки
+    document.querySelectorAll('.card-hover').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.transition = 'all 0.3s ease';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
+    });
+</script>
+{% endblock %}

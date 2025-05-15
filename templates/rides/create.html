@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/rides.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card ride-card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0"><i class="fas fa-road me-2"></i>Создать новую поездку</h2>
+                </div>
+
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Откуда -->
+                        <div class="mb-4">
+                            {{ form.departure.label(class="form-label fw-bold") }}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                {{ form.departure(class="form-control form-control-lg") }}
+                                <div class="invalid-feedback">{{ form.departure.errors[0] }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Куда -->
+                        <div class="mb-4">
+                            {{ form.destination.label(class="form-label fw-bold") }}
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                {{ form.destination(class="form-control form-control-lg") }}
+                                <div class="invalid-feedback">{{ form.destination.errors[0] }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Дата и время -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                {{ form.date.label(class="form-label fw-bold") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                    {{ form.date(class="form-control form-control-lg", min=now) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.time.label(class="form-label fw-bold") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    {{ form.time(class="form-control form-control-lg") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Места и цена -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                {{ form.seats_available.label(class="form-label fw-bold") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                    {{ form.seats_available(class="form-control form-control-lg", min="1", max="8") }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.price.label(class="form-label fw-bold") }}
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-ruble-sign"></i></span>
+                                    {{ form.price(class="form-control form-control-lg", min="0", step="50") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            {{ form.submit(class="btn btn-primary btn-lg py-3") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+// Валидация формы
+(function () {
+    'use strict'
+
+    const forms = document.querySelectorAll('.needs-validation')
+
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}
